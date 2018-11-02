@@ -2,6 +2,12 @@
 
 Applied SARIMA time series algorithm to predict sales amount based on past 4 year data and creat alerts if data is out of accepted range.
 
+* numpy,pandas
+* statsmodels
+* matplotlib
+* plotly
+* itertools
+* sklearn
 
 
 Jupyter notebook [here](https://github.com/RuoyunCarina-D/Anomly-Detection-SARIMA/blob/master/SARIMA%20.ipynb)

@@ -2,12 +2,14 @@
 
 Applied SARIMA time series algorithm to predict sales amount based on past 4 year data and creat alerts if data is out of accepted range.
 
-# SARIMA
+### SARIMA
 stands for Auto-Regressive (AR) Integrated (I) Moving Average (MA). The ARIMA model is all about differencing the series to make it stationary. We do this by taking differences of the variable over time. We have three methods of “taking differences” available to us in an ARIMA model. The AR term, the I term, and the MA term. 
 
-*_I_* term is a full difference. That is today’s value minus yesterday’s value.
-*_AR_* term is very much related. The way that I like to think of the AR term is that it is a partial difference. The coefficient on the AR term will tell you the percent of a difference you need to take. 
-*_MA_* term tells you what percent to add back into the error term after differencing. Greene’s book Econometric Analysis, makes the point that this is really about patching up the standard errors. At least that’s what I got out of his discussion of the topic.
+**_I_** is a full difference. That is today’s value minus yesterday’s value.
+
+**_AR_** is very much related. The way that I like to think of the AR term is that it is a partial difference. The coefficient on the AR term will tell you the percent of a difference you need to take. 
+
+**_MA_** is what percent to add back into the error term after differencing. Greene’s book Econometric Analysis, makes the point that this is really about patching up the standard errors. At least that’s what I got out of his discussion of the topic.
 
 
 * numpy,pandas

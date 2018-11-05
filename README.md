@@ -1,9 +1,10 @@
-# Anomly-Detection-SARIMA
+# Anomly Detection
+## SARIMA
 
 Applied SARIMA time series algorithm to predict sales amount based on past 4 year data and creat alerts if data is out of accepted range.
 
-### SARIMA
-stands for Auto-Regressive (AR) Integrated (I) Moving Average (MA). The ARIMA model is all about differencing the series to make it stationary. We do this by taking differences of the variable over time. We have three methods of “taking differences” available to us in an ARIMA model. The AR term, the I term, and the MA term. 
+**SARIMA** stands for Seasonal (S) Auto-Regressive (AR) Integrated (I) Moving Average (MA). The Seasonal ARIMA model is to difference the series to make it stationary by taking differences of the variable over time. There are 3 methods to take differences in an ARIMA model - AR, I, and MA. 
+
 
 **_I_** is a full difference. That is today’s value minus yesterday’s value.
 
@@ -11,7 +12,7 @@ stands for Auto-Regressive (AR) Integrated (I) Moving Average (MA). The ARIMA mo
 
 **_MA_** is what percent to add back into the error term after differencing. Greene’s book Econometric Analysis, makes the point that this is really about patching up the standard errors. At least that’s what I got out of his discussion of the topic.
 
-
+### Packages used: 
 * numpy,pandas
 * statsmodels
 * matplotlib

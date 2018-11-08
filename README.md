@@ -1,7 +1,7 @@
 # Anomly Detection
 ## SARIMA
 
-Applied SARIMA time series algorithm to predict sales amount based on past 4 year data and creat alerts if data is out of accepted range.
+Applied SARIMA time series algorithm to predict sales revenue based on past 4-year data and creat alerts if data is out of accepted range.
 
 **SARIMA** stands for Seasonal (S) Auto-Regressive (AR) Integrated (I) Moving Average (MA). The Seasonal ARIMA model is to difference the series to make it stationary by taking differences of the variable over time. There are 3 methods to take differences in an ARIMA model - AR, I, and MA. 
 

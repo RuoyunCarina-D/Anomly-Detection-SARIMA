@@ -1,15 +1,3 @@
-
-# coding: utf-8
-
-# In[2]:
-
-
-###################
-##
-## Preparation
-##
-###################
-
 import pandas as pd
 import numpy as np
 import time
@@ -23,36 +11,27 @@ import statsmodels.api as sm
 import plotly.plotly as py
 import plotly.graph_objs as go
 
-
-# **data read from file**
-
-# In[3]:
-
-
+############################################# Data Preparation ###############################################################
+## data read from file
 order_df = pd.read_csv('__.csv')
 
 
-# In[4]:
-
-
+#set index as date 
 order_df['date'] = pd.to_datetime(order_df['date'])
 order_df = order_df.sort_values(by = ['date'])
 order_df.index = order_df['date']
-order_df.tail()
 
-
-# In[5]:
-
-
+#vis for original dataset
 data = [
     go.Scatter(
-        x=order_df.index, # assign x as the dataframe column 'x'
+        x=order_df.index,
         y=order_df.order
     )
 ]
-
 py.iplot(data)
 
+
+############################################# Seasaonl decomposing ############################################################
 
 res = sm.tsa.seasonal_decompose(order_df['order'].interpolate(),
                                 freq=52,
@@ -60,18 +39,16 @@ res = sm.tsa.seasonal_decompose(order_df['order'].interpolate(),
 resplot = res.plot()
 
 
+#check seasonality of residuals
 res.resid[np.isfinite(res.resid) == False] = 0
-
-
 
 res_resid = sm.tsa.seasonal_decompose(res.resid.interpolate(),
                                 freq=52,
                                 model='additive ')
 resplot = res_resid.plot()
 
-
-# ### divide into train and test
-
+############################################# Model Selection#################################################################
+#### divide into train and test
 
 mid = int(np.round(len(order_df)*0.8))
 train = order_df.head(mid)
@@ -85,10 +62,7 @@ test_se = test_se.asfreq('W-Mon')
 print (train_se.tail(), test_se.head())
 
 
-# **ARIMA** 
-# ### Choose the parameters
-
-
+### Choose the parameters
 import itertools  
 
 # define the p, d and q parameters to take any value between 0 and 2
@@ -102,10 +76,7 @@ seasonal = 52
 seasonal_pdq = [(x[0], x[1], x[2], seasonal) for x in list(itertools.product(p, d, q))]
 
 
-# In[12]:
-
-
-# compute the Akaike Information Criterion (AIC): choose the model with lowest AIC.
+# compute the Akaike Information Criterion (AIC) to find out the model with lowest AIC.
 best_aic = np.inf
 best_pdq = None
 best_seasonal_pdq = None
@@ -136,9 +107,6 @@ for param in pdq:
 print("Best SARIMAX{}x{}12 model - AIC:{}".format(best_pdq, best_seasonal_pdq, best_aic))
 
 
-# In[12]:
-
-
 # define SARIMAX model and fit it to the data
 mdl = sm.tsa.statespace.SARIMAX(train_se,
                                 order=(1, 1, 1),
@@ -159,7 +127,6 @@ print(res.summary())
 # $$
 # where the DoF (Degree of Freedom) $\nu = n - k$. Computing the critical value of the Chi-square distribution one finds that the resulting model exhibits serially uncorrelated errors:
 
-# In[17]:
 
 
 from scipy.stats import chi2
@@ -167,15 +134,9 @@ chi = chi2.isf(q=0.05, df=192-3)
 chi
 
 
-# In[13]:
-
-
 res.plot_diagnostics(figsize=(16, 10))
 plt.tight_layout()
 plt.show()
-
-
-# In[14]:
 
 
 from sklearn.metrics import mean_squared_log_error
@@ -210,9 +171,6 @@ plotSARIMAX_m(train_se, test_se, pred2)
 
 
 # ### Choose appropriate Alpha for accepted range
-
-# In[19]:
-
 
 def accuracy(test_data, model, alpha=0.05):
     a = 0

@@ -1,11 +1,9 @@
 # Anomly Detection
 Applied SARIMA time series algorithm to predict sales revenue based on past 4-year data and creat alerts if data is out of accepted range.
 
-Python code [here](https://github.com/RuoyunCarina-D/Anomly-Detection-SARIMA/blob/master/SARIMA.py)
-
-Jupyter notebook with charts [here](https://github.com/RuoyunCarina-D/Anomly-Detection-SARIMA/blob/master/SARIMA%20.ipynb)
-
-Interactive charts in the .ipynb, please check [here](http://nbviewer.jupyter.org/github/RuoyunCarina-D/Anomly-Detection-SARIMA/blob/master/interactive%20source.ipynb) (Needed to login in Plotly account)
+* Python code [here](https://github.com/RuoyunCarina-D/Anomly-Detection-SARIMA/blob/master/SARIMA.py)
+* Jupyter notebook with charts [here](https://github.com/RuoyunCarina-D/Anomly-Detection-SARIMA/blob/master/SARIMA%20.ipynb)
+* Interactive charts in the .ipynb, please check [here](http://nbviewer.jupyter.org/github/RuoyunCarina-D/Anomly-Detection-SARIMA/blob/master/interactive%20source.ipynb) (Needed to login in Plotly account)
 
 
 

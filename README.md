@@ -1,5 +1,5 @@
 # Anomly Detection
-Applied SARIMA time series algorithm to predict sales revenue based on past 4-year data and creat alerts if data is out of accepted range.
+SARIMA time series algorithm is applied in this project to predict sales revenue based on past 4 year data. Besides, the abnomaly sales dates are identified with different confidence interval (CI) and will be highlighted when data is out of accepted range.
 
 * Python code [here](https://github.com/RuoyunCarina-D/Anomly-Detection-SARIMA/blob/master/SARIMA.py)
 * Jupyter notebook with charts [here](https://github.com/RuoyunCarina-D/Anomly-Detection-SARIMA/blob/master/SARIMA%20.ipynb)

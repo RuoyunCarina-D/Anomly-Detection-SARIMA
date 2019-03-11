@@ -4,6 +4,7 @@ import time
 import sys
 from IPython.display import Image
 
+#testing if the update is working
 get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -16,7 +17,7 @@ import plotly.graph_objs as go
 order_df = pd.read_csv('__.csv')
 
 
-#set index as date 
+#set index as date
 order_df['date'] = pd.to_datetime(order_df['date'])
 order_df = order_df.sort_values(by = ['date'])
 order_df.index = order_df['date']
@@ -63,11 +64,11 @@ print (train_se.tail(), test_se.head())
 
 
 ### Choose the parameters
-import itertools  
+import itertools
 
 # define the p, d and q parameters to take any value between 0 and 2
 p = d = q = range(0, 2)
- 
+
 # generate all different combinations of p, d and q triplets
 pdq = list(itertools.product(p, d, q))
 
@@ -91,19 +92,19 @@ for param in pdq:
                                                 seasonal_order = param_seasonal,
                                                 enforce_stationarity=True,
                                                 enforce_invertibility=False)
-            
+
             res = tmp_mdl.fit()
             if res.aic < best_aic:
                 best_aic = res.aic
                 best_pdq = param
                 best_seasonal_pdq = param_seasonal
                 best_mdl = tmp_mdl
-        
+
         except:
             print(param,param_seasonal, "Unexpected error:", sys.exc_info()[1])
             continue
-            
-            
+
+
 print("Best SARIMAX{}x{}12 model - AIC:{}".format(best_pdq, best_seasonal_pdq, best_aic))
 
 
@@ -157,16 +158,16 @@ def plotSARIMAX_m(train_data, test_data, pred_model):
     t = 'MSE: {}'.format(mean_squared_log_error(test_data,pred_model.predicted_mean))
     pred_model.predicted_mean.plot(ax=ax1, title=t, label = 'Prediction')
     test_data.plot(ax=ax1, label = 'Reality')
-    ax1.fill_between(pred_model.conf_int(alpha = 0.1).index, 
-                     pred_model.conf_int(alpha = 0.1).iloc[:,0], 
-                     pred_model.conf_int(alpha = 0.1).iloc[:,1], 
+    ax1.fill_between(pred_model.conf_int(alpha = 0.1).index,
+                     pred_model.conf_int(alpha = 0.1).iloc[:,0],
+                     pred_model.conf_int(alpha = 0.1).iloc[:,1],
                      alpha=0.5,facecolor='grey')
     ax3 = sm.graphics.tsa.plot_acf(res.resid, lags=seasonal, alpha=.05, ax=ax3, title="ACF of residuals")
     ax4 = sm.graphics.tsa.plot_pacf(res.resid, lags=seasonal, alpha=.05, ax=ax4, title="PACF of residuals")
     plt.tight_layout()
     ax1.legend()
     print("ACF and PACF of residuals")
-    
+
 plotSARIMAX_m(train_se, test_se, pred2)
 
 
@@ -176,13 +177,13 @@ def accuracy(test_data, model, alpha=0.05):
     a = 0
     anomly = list()
     for i in range(len(test_data)):
-        if (test_data[i] >=  model.conf_int(alpha = alpha).iloc[i,0] 
-            and test_data[i] <=  model.conf_int(alpha = alpha).iloc[i,1]): 
+        if (test_data[i] >=  model.conf_int(alpha = alpha).iloc[i,0]
+            and test_data[i] <=  model.conf_int(alpha = alpha).iloc[i,1]):
             a += 1
         else: anomly.append([str(test_data.index[i]), test_data[i]])
-  
+
     return round(a/len(test_data),4), anomly
-    
+
 def compare_acc(test_data, model, range_start, range_end, range_sep):
     alpha = np.arange(range_start,range_end, range_sep)
     acc = pd.DataFrame(columns = ['alpha','acc','no_of_ab'])
@@ -190,7 +191,7 @@ def compare_acc(test_data, model, range_start, range_end, range_sep):
     for i in range(len(alpha)):
         acc.iloc[i,1] = accuracy(test_data, model, alpha=alpha[i])[0]
         acc.iloc[i,2] = len(accuracy(test_data, model, alpha=alpha[i])[1])
-        
+
     data = [
         go.Scatter(
             x=acc.alpha, # assign x as the dataframe column 'x'
@@ -204,7 +205,7 @@ def compare_acc(test_data, model, range_start, range_end, range_sep):
             yaxis='y2'
         )
     ]
-    
+
     layout = go.Layout(
     title='Accuracy comparison based on different Alpha',
     yaxis=dict(
@@ -287,4 +288,3 @@ def areaplot(alpha):
 areaplot(0.01)
 areaplot(0.05)
 areaplot(0.13)
-
